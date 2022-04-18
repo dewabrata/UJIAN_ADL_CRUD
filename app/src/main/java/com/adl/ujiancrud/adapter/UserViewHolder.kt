@@ -33,7 +33,7 @@ class UserViewHolder(view:View):RecyclerView.ViewHolder(view) {
             val intent = Intent(adapter.parent.context, AddUser::class.java)
             intent.putExtra("data",adapter.data.get(position))
             adapter.parent.context.startActivity(intent)
-            adapter.parent.context
+
         })
 
     }

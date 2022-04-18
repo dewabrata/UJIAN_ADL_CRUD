@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.adl.ujiancrud.database.UserDatabase
 import com.adl.ujiancrud.database.model.UserModel
+import com.anirudh.locationfetch.EasyLocationFetch
+import com.anirudh.locationfetch.GeoLocationModel
 import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -15,9 +17,17 @@ class AddUser : AppCompatActivity() {
 
     lateinit var data :UserModel
     var isUpdate:Boolean = false
+    lateinit var geloc:GeoLocationModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_user)
+
+
+        geloc = EasyLocationFetch(this@AddUser).getLocationData();
+      //  txtGPS.setText("${geloc.lattitude.toString()} - ${geloc.lattitude.toString()}" )
+        txtGPS.setText("${geloc.address.toString()} " )
+
+
 
         if(intent.hasExtra("data")) {
             data = intent.getParcelableExtra("data")!!
