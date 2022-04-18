@@ -60,9 +60,14 @@ dependencies {
 }
 
 
-
+//gps
 dependencies {
     implementation 'com.github.anirudhmpai:EasyLocationFetch:2.1.1'
     implementation 'com.android.volley:volley:1.2.1'
 
+}
+
+//camera
+dependencies {
+    implementation "com.github.dIvYaNshhh:android-image-picker:1.0.3"
 }
