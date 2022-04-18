@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_add_user.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import lib.android.imagepicker.ImagePicker
+import java.io.File
 import java.util.*
 
 class AddUser : AppCompatActivity(),ImagePicker.OnImageSelectedListener {
@@ -23,6 +24,8 @@ class AddUser : AppCompatActivity(),ImagePicker.OnImageSelectedListener {
     var isUpdate:Boolean = false
     lateinit var geloc:GeoLocationModel
     lateinit var imagePicker:ImagePicker
+     var   newName:String =""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +65,9 @@ class AddUser : AppCompatActivity(),ImagePicker.OnImageSelectedListener {
                     spnGender.selectedItemPosition.toString(),
                     txtUmur.text.toString(),
                     spnStatus.selectedItemPosition.toString(),
-                    txtGPS.text.toString()
+                    txtGPS.text.toString(), newName
+
+
 
                 )
                     UserDatabase.getInstance(this@AddUser).userDao().insertUser(model)
@@ -73,7 +78,7 @@ class AddUser : AppCompatActivity(),ImagePicker.OnImageSelectedListener {
                         spnGender.selectedItemPosition.toString(),
                         txtUmur.text.toString(),
                         spnStatus.selectedItemPosition.toString(),
-                        txtGPS.text.toString())
+                        txtGPS.text.toString(),newName)
                     UserDatabase.getInstance(this@AddUser).userDao().updateUser(model)
                 }
 
@@ -99,6 +104,7 @@ class AddUser : AppCompatActivity(),ImagePicker.OnImageSelectedListener {
 
 
 
+
     }
 
     override fun onImageSelectFailure() {
@@ -106,13 +112,31 @@ class AddUser : AppCompatActivity(),ImagePicker.OnImageSelectedListener {
     }
 
     override fun onImageSelectSuccess(imagePath: String) {
+
+        val fileNameWithoutExtension = imagePath.substring(0, imagePath.lastIndexOf('.'))
+
+        newName = fileNameWithoutExtension + txtNamaUser.text.toString()+txtUmur.text.toString()+".jpg"
+
+
+
+        val fileSrc = File(imagePath)
+        val fileDest : File = File(newName)
+
+        fileSrc.copyTo(fileDest)
+
+        //   val fileDest : File = File("destPath")
         imageView?.let {
             Glide.with(this@AddUser)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .load(imagePath)
+                .load(newName)
                 .into(it)
+
+         /*   val fileSrc = File(imagePath)
+            val fileDest : File = File("destPath")
+
+            fileSrc.copyTo(fileDest)*/
         }
     }
 

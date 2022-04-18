@@ -13,5 +13,6 @@ data class UserModel(
     val gender:String,
     val umur:String,
     val status:String,
-    val alamat:String
+    val alamat:String,
+    val photo:String
 ) :Parcelable
